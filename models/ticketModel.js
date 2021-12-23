@@ -45,12 +45,12 @@ ticketSchema.path('uniqueId').validate(async (uniqueId) => {
 	return !uniqueIdCount;
 }, 'ID already exists!');
 
-// ticketSchema.path('title').validate(async (title) => {
-// 	const uniqueTitleCount = await mongoose.models.Ticket.countDocuments({
-// 		title,
-// 	});
-// 	return !uniqueTitleCount;
-// }, 'Title already in use!');
+ticketSchema.path('title').validate(async (title) => {
+	const uniqueTitleCount = await mongoose.models.Ticket.countDocuments({
+		title,
+	});
+	return !uniqueTitleCount;
+}, 'Title already in use!');
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
 
