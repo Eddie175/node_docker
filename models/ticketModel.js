@@ -38,12 +38,12 @@ const ticketSchema = new mongoose.Schema({
 	},
 });
 
-ticketSchema.path('uniqueId').validate(async (uniqueId) => {
-	const uniqueIdCount = await mongoose.models.Ticket.countDocuments({
-		uniqueId,
-	});
-	return !uniqueIdCount;
-}, 'ID already exists!');
+// ticketSchema.path('uniqueId').validate(async (uniqueId) => {
+// 	const uniqueIdCount = await mongoose.models.Ticket.countDocuments({
+// 		uniqueId,
+// 	});
+// 	return !uniqueIdCount;
+// }, 'ID already exists!');
 
 ticketSchema.path('title').validate(async (title) => {
 	const uniqueTitleCount = await mongoose.models.Ticket.countDocuments({
