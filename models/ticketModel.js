@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
 const validateStatus = function (status) {
-	return status === 'to-do' || status === 'in progress' || status === 'closed' ? true : false;
+	return status === 'to-do' || status === 'in progress' || status === 'closed'
+		? true
+		: false;
 };
 
 const ticketSchema = new mongoose.Schema({
@@ -19,6 +21,8 @@ const ticketSchema = new mongoose.Schema({
 	},
 	status: {
 		type: String,
+		required: [true, 'Ticket must have a status!'],
+		default: 'open',
 		validate: [validateStatus, 'Please add a valid status'],
 	},
 	dateCreated: {
@@ -38,12 +42,12 @@ const ticketSchema = new mongoose.Schema({
 	},
 });
 
-// ticketSchema.path('uniqueId').validate(async (uniqueId) => {
-// 	const uniqueIdCount = await mongoose.models.Ticket.countDocuments({
-// 		uniqueId,
-// 	});
-// 	return !uniqueIdCount;
-// }, 'ID already exists!');
+ticketSchema.path('uniqueId').validate(async (uniqueId) => {
+	const uniqueIdCount = await mongoose.models.Ticket.countDocuments({
+		uniqueId,
+	});
+	return !uniqueIdCount;
+}, 'ID already exists!');
 
 ticketSchema.path('title').validate(async (title) => {
 	const uniqueTitleCount = await mongoose.models.Ticket.countDocuments({
